@@ -1,0 +1,49 @@
+name: unleashedrecomp
+base: core24
+version: '1.0.3-1'
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+summary: Static recompilation of Sonic Unleashed.
+description: |
+  An unofficial PC port of the Xbox 360 version of Sonic Unleashed created through the process of static recompilation. 
+grade: stable
+confinement: strict
+
+apps:
+  unleashedrecomp:
+    command: UnleashedRecomp --sdl-video-driver wayland
+    desktop: usr/share/applications/UnleashedRecomp.desktop
+    common-id: io.github.hedge_dev.unleashedrecomp
+    environment:
+      HOME: $SNAP_USER_COMMON
+    extensions: [kde-neon-6]
+    plugs:
+      - unity7
+      - screen-inhibit-control
+      - audio-playback
+      - network
+      - network-bind
+      - home
+      - removable-media
+      - mount-observe
+      - joystick
+      - bluez
+
+parts:
+  unleashedrecomp:
+    plugin: dump
+    source: https://github.com/Jujstme/UnleashedRecomp/releases/download/1.0.3-1/UnleashedRecomp-1.0.3-1.zip
+    prime:
+      - UnleashedRecomp
+
+  unleashedrecomp-launcher:
+    after: [unleashedrecomp]
+    plugin: nil
+    source: ./gui-launcher
+    override-build: |
+      mkdir -p $CRAFT_PART_INSTALL/usr/local/share/icons/hicolor/scalable/apps/
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/applications/
+      mv -f UnleashedRecomp.png $CRAFT_PART_INSTALL/usr/local/share/icons/hicolor/scalable/apps/
+      mv -f UnleashedRecomp.desktop $CRAFT_PART_INSTALL/usr/share/applications/
