@@ -10,11 +10,12 @@ description: |
   An unofficial PC port of the Xbox 360 version of Sonic Unleashed created through the process of static recompilation. 
 grade: stable
 confinement: strict
+icon: UP_Mod-icon.png
 
 apps:
   unleashedrecomp:
     command: UnleashedRecomp --sdl-video-driver wayland
-    desktop: usr/share/applications/UnleashedRecomp.desktop
+    desktop: io.github.hedge_dev.unleashedrecomp.desktop
     common-id: io.github.hedge_dev.unleashedrecomp
     environment:
       HOME: $SNAP_USER_COMMON
@@ -34,16 +35,13 @@ apps:
 parts:
   unleashedrecomp:
     plugin: dump
-    source: https://github.com/Jujstme/UnleashedRecomp/releases/download/1.0.3-1/UnleashedRecomp-1.0.3-1.zip
+    source: https://github.com/Jujstme/UnleashedRecomp/releases/download/$SNAPCRAFT_PROJECT_VERSION/UnleashedRecomp-$SNAPCRAFT_PROJECT_VERSION.zip
     prime:
       - UnleashedRecomp
 
-  unleashedrecomp-launcher:
+  dot-desktop:
     after: [unleashedrecomp]
-    plugin: nil
-    source: ./gui-launcher
-    override-build: |
-      mkdir -p $CRAFT_PART_INSTALL/usr/local/share/icons/hicolor/scalable/apps/
-      mkdir -p $CRAFT_PART_INSTALL/usr/share/applications/
-      mv -f UnleashedRecomp.png $CRAFT_PART_INSTALL/usr/local/share/icons/hicolor/scalable/apps/
-      mv -f UnleashedRecomp.desktop $CRAFT_PART_INSTALL/usr/share/applications/
+    plugin: dump
+    source: ./dot-desktop
+    prime:
+      - io.github.hedge_dev.unleashedrecomp.desktop

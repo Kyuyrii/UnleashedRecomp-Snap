@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Unleashed Recompiled
-Exec=${SNAP}/UnleashedRecomp.bin --sdl-video-driver wayland
-Type=Application
-Icon=${SNAP}/usr/local/share/icons/hicolor/scalable/apps/UnleashedRecomp.png
-Categories=Game;
-Comment=Static recompilation of Sonic Unleashed.
-MimeType=x-scheme-handler/unleashedrecomp
